@@ -21,15 +21,23 @@ let defaultAdapter
  * @return {boolean} Whether or not the request is a match for the tracked item
  */
 let matchRequest = (tracked, request, baseURL = '') => {
-  let matchedURL = false
-  let matchedMethod = true
+  let matchedURL = false;
+  let matchedMethod = true;
 
   if (tracked.url instanceof RegExp) {
     matchedURL = tracked.url.test(request.url)
   } else if (request.url instanceof RegExp) {
     matchedURL = request.url.test(tracked.url)
-  } else {
-    matchedURL = `${baseURL || ''}${tracked.url}` === request.url
+  }
+
+  if (tracked.url === request.url) {
+    matchedURL = true;
+  } else if (baseURL) {
+    if (baseURL.endsWith('/')) {
+      matchedURL = `${baseURL}${tracked.url}` === request.url;
+    } else {
+      matchedURL = `${baseURL}/${tracked.url}` === request.url;
+    }
   }
 
   if (tracked.method) {
