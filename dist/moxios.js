@@ -118,8 +118,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    matchedURL = tracked.url.test(request.url);
 	  } else if (request.url instanceof RegExp) {
 	    matchedURL = request.url.test(tracked.url);
-	  } else {
-	    matchedURL = '' + (baseURL || '') + tracked.url === request.url;
+	  }
+	
+	  if (tracked.url === request.url) {
+	    matchedURL = true;
+	  } else if (baseURL) {
+	    if (baseURL.endsWith('/')) {
+	      matchedURL = '' + baseURL + tracked.url === request.url;
+	    } else {
+	      matchedURL = baseURL + '/' + tracked.url === request.url;
+	    }
 	  }
 	
 	  if (tracked.method) {
