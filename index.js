@@ -34,9 +34,9 @@ let matchRequest = (tracked, request, baseURL = '') => {
     matchedURL = true;
   } else if (baseURL) {
     if (baseURL.endsWith('/')) {
-      matchedURL = `${baseURL}${tracked.url}` === request.url;
+      matchedURL = `${baseURL}${request.url}` === tracked.url;
     } else {
-      matchedURL = `${baseURL}/${tracked.url}` === request.url;
+      matchedURL = `${baseURL}/${request.url}` === tracked.url;
     }
   }
 
