@@ -33,16 +33,18 @@ let matchRequest = (tracked, request, baseURL = '') => {
   if (tracked.url === request.url) {
     matchedURL = true;
   } else if (baseURL) {
-    if (request.url.startsWith('/')) {
-      matchedURL = baseURL + request.url.slice(1) === tracked.url
+    if (baseURL.endsWith('/')) {
+      if (request.url.startsWith('/')) {
+        matchedURL = baseURL + request.url.slice(1) === tracked.url;
+      } else {
+        matchedURL = baseURL + request.url === tracked.url;
+      }
     } else {
-      matchedURL = baseURL + request.url === tracked.url;
-    }
-  } else {
-    if (request.url.startsWith('/')) {
-      matchedURL = baseURL + request.url === tracked.url
-    } else {
-      matchedURL = baseURL + '/' + request.url === tracked.url;
+      if (request.url.startsWith('/')) {
+        matchedURL = baseURL + request.url === tracked.url;
+      } else {
+        matchedURL = baseURL + '/' + request.url === tracked.url;
+      }
     }
   }
 
