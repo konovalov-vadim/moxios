@@ -123,8 +123,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (tracked.url === request.url) {
 	    matchedURL = true;
 	  } else if (baseURL) {
-	    if (baseURL.endsWith('/')) {
-	      matchedURL = '' + baseURL + request.url === tracked.url;
+	    if (request.url.startsWith('/')) {
+	      matchedURL = baseURL + request.url.slice(1) === tracked.url;
+	    } else {
+	      matchedURL = baseURL + request.url === tracked.url;
+	    }
+	  } else {
+	    if (request.url.startsWith('/')) {
+	      matchedURL = baseURL + request.url === tracked.url;
 	    } else {
 	      matchedURL = baseURL + '/' + request.url === tracked.url;
 	    }
